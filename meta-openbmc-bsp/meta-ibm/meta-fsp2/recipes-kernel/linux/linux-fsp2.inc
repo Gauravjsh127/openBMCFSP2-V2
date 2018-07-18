@@ -24,6 +24,8 @@ do_patch_append() {
        done
 }
 
+DEPENDS = "u-boot-mkimage-native"
+
 inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
