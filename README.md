@@ -47,6 +47,7 @@ Machine | TEMPLATECONF
 --------|---------
 fsp2-ppc | ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/```
 fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/```
+system-q-fsp2| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2/conf/```
 
 As an example target fsp2-ppc
 ```

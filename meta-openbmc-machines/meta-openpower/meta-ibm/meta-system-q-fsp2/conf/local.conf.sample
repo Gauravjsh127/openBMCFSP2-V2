@@ -1,4 +1,4 @@
-MACHINE ??= "fsp2test"
+MACHINE ??= "fsp2"
 DISTRO ?= "poky"
 PACKAGE_CLASSES ?= "package_rpm"
 SANITY_TESTED_DISTROS_append ?= " *"

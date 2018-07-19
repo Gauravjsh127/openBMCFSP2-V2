@@ -18,9 +18,7 @@ BBLAYERS ?= " \
   ##OEROOT##/import-layers/meta-openembedded/meta-networking \
   ##OEROOT##/import-layers/meta-openembedded/meta-python \
   ##OEROOT##/import-layers/meta-virtualization \
-  ##OEROOT##/meta-openbmc-machines/meta-openpower \
-  ##OEROOT##/meta-openbmc-machines/meta-openpower/meta-ibm \
-  ##OEROOT##/meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-systemq \
+  ##OEROOT##/meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2 \
   "
 BBLAYERS_NON_REMOVABLE ?= " \
   ##OEROOT##/meta \

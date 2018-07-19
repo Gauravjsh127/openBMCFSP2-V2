@@ -1,5 +1,5 @@
 targets is:
-     fsp2test
+     fsp2
 
 Build the kernel :     bitbake linux-yocto-fsp2
 
