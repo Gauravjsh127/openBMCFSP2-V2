@@ -109,9 +109,16 @@ do_prepare_config () {
 	if [ "${BUILD_REPRODUCIBLE_BINARIES}" = "1" ]; then
 		export KCONFIG_NOTIMESTAMP=1
 	fi
-	sed -e '/CONFIG_STATIC/d' \
-		< ${WORKDIR}/defconfig > ${S}/.config
-	echo "# CONFIG_STATIC is not set" >> .config
+    if grep "CONFIG_INIT=y" ${B}/.config; then
+        sed -e '/CONFIG_STATIC/d' \
+            < ${WORKDIR}/defconfig > ${S}/.config
+        echo "# CONFIG_STATIC is not set" >> .config
+    else
+        sed -e '/CONFIG_STATIC/d' \
+            < ${WORKDIR}/defconfig_poky > ${S}/.config
+        echo "# CONFIG_STATIC is not set" >> .config
+    
+    fi    
 	for i in 'CROSS' 'DISTRO FEATURES'; do echo "### $i"; done >> \
 		${S}/.config
 	sed -i -e '${configmangle}' ${S}/.config
