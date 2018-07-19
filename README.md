@@ -1,4 +1,4 @@
-# OpenBMC
+# OpenBMC : FSP2 support
 
 [![Build Status](https://openpower.xyz/buildStatus/icon?job=openbmc-build)](https://openpower.xyz/job/openbmc-build/)
 
@@ -29,8 +29,8 @@ sudo dnf groupinstall "C Development Tools and Libraries"
 ```
 ### 2) Download the source
 ```
-git clone git@github.com:openbmc/openbmc.git
-cd openbmc
+git clone https://github.com/Gauravjsh127/openBMCFSP2-V2.git
+cd openBMCFSP2-V2
 ```
 
 ### 3) Target your hardware
@@ -45,93 +45,33 @@ then move to the next step. Additional examples can be found in the
 
 Machine | TEMPLATECONF
 --------|---------
-Palmetto | ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-palmetto/conf```
-Zaius| ```meta-openbmc-machines/meta-openpower/meta-ingrasys/meta-zaius/conf```
-Witherspoon| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-witherspoon/conf```
+fsp2-ppc | ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/```
+fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/```
 
-
-As an example target Palmetto
+As an example target fsp2-ppc
 ```
-export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-palmetto/conf
+export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/
 ```
 
-### 4) Build
+### 4) Build Images
 
 ```
+./openBMC_PSCN/clone-meta-fsp2-ibm-internal.sh
 . openbmc-env
-bitbake obmc-phosphor-image
+bitbake core-image-minimal
+
+
+Note 
+  - For fsp2-x86 build the core-image-minimal-x86 image.
+  - For cloning meta-fsp2-ibm-internal layer you need special access to github.ibm.com(Contact the repository owners for access).
 ```
 
-Additional details can be found in the [docs](https://github.com/openbmc/docs)
-repository.
+### 4) Build Application sdk
+```
+bitbake core-image-minimal -c populate_sdk 
 
-## Build Validation and Testing
-Commits submitted by members of the OpenBMC GitHub community are compiled and
-tested via our [Jenkins](https://openpower.xyz/) server.  Commits are run
-through two levels of testing.  At the repository level the makefile `make
-check` directive is run.  At the system level, the commit is built into a
-firmware image and run with an arm-softmmu QEMU model against a barrage of
-[CI tests](https://openpower.xyz/job/openbmc-test-qemu-ci/).
-
-Commits submitted by non-members do not automatically proceed through CI
-testing. After visual inspection of the commit, a CI run can be manually
-performed by the reviewer.
-
-Automated testing against the QEMU model along with supported systems are
-performed.  The OpenBMC project uses the
-[Robot Framework](http://robotframework.org/) for all automation.  Our
-complete test repository can be found
-[here](https://github.com/openbmc/openbmc-test-automation).
-
-## Submitting Patches
-Support of additional hardware and software packages is always welcome.
-Please follow the [contributing guidelines](https://github.com/openbmc/docs/blob/master/contributing.md)
-when making a submission.  It is expected that contributions contain test
-cases.
-
-## Bug Reporting
-[Issues](https://github.com/openbmc/openbmc/issues) are managed on
-GitHub.  It is recommended you search through the issues before opening
-a new one.
-
-## Features of OpenBMC
-
-**Feature List**
-* REST Management
-* IPMI
-* SSH based SOL
-* Power and Cooling Management
-* Event Logs
-* Zeroconf discoverable
-* Sensors
-* Inventory
-* LED Management
-* Host Watchdog
-* Simulation
-* Code Update Support for multiple BMC/BIOS images
-* POWER On Chip Controller (OCC) Support
-
-**Features In Progress**
-* Full IPMI 2.0 Compliance with DCMI
-* Verified Boot
-* HTML5 Java Script Web User Interface
-* BMC RAS
-
-**Features Requested but need help**
-* OpenCompute Redfish Compliance
-* OpenBMC performance monitoring
-* cgroup user management and policies
-* Remote KVM
-* Remote USB
-* OpenStack Ironic Integration
-* QEMU enhancements
-
-
-## Finding out more
-Dive deeper in to OpenBMC by opening the [docs](https://github.com/openbmc/docs)
-repository.
-
-## Contact
-- Mail: openbmc@lists.ozlabs.org [https://lists.ozlabs.org/listinfo/openbmc](https://lists.ozlabs.org/listinfo/openbmc)
-- IRC: #openbmc on freenode.net
-- Riot: [#openbmc:matrix.org](https://riot.im/app/#/room/#openbmc:matrix.org)
+Note 
+ - To install SDK in host system run the script /tmp/deply/openbmc-phosphor-glibc-x86_64-core-image-minimal-powerpc-toolchain-2.4.2.sh.sh
+ - SDK is installed in the path /opt/openbmc-phosphor/2.4.2 by default.
+ - Always set the build environment variables defined in the file /opt/openbmc-phosphor/2.4.2/environment-setup-powerpc-openbmc-linux before using the c++/c openbmc compilers.
+```

@@ -2,9 +2,10 @@
 #@NAME: fsp2
 #@DESCRIPTION: evaluation machine board configuration for the fsp2 ppc476
 
-PREFERRED_PROVIDER_virtual/kernel ?= "linux-fsp2"
+#PREFERRED_PROVIDER_virtual/kernel ?= "linux-fsp2"
+PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto-fsp2"
 
-DEFAULTTUNE = "powerpc-nf"
+DEFAULTTUNE = "powerpc"
 
 SERIAL_CONSOLES = "115200;ttyS0"
 

@@ -8,6 +8,8 @@ LICENSE = "Apache-2"
 DEPENDS = "gflags c-ares protobuf protobuf-native protobuf-c protobuf-c-native openssl"
 DEPENDS_append_class-target = " gtest grpc-native "
 
+INSANE_SKIP_${PN} = "file-rdeps ldflags dev-so build-deps installed-vs-shipped "
+
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 SRC_URI = "https://github.com/grpc/grpc/archive/v${PV}.tar.gz \
