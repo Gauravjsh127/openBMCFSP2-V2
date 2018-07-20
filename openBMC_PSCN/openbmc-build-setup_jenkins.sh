@@ -490,7 +490,7 @@ cp ../crash-ppc32-cross/extensions/*.so tmp/deploy/images/fsp2-x86/rootfs/usr/li
 
 cp ../meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-apps/recipes-apps/crashtool/crashtool-x86/ppc-linux-gdb tmp/deploy/images/fsp2-x86/rootfs/usr/bin/
 cd ../../
-./openbmcFSP2/build/tmp/deploy/sdk/openbmc-phosphor-glibc-x86_64-core-image-minimal-powerpc-toolchain-2.4.2.sh -y
+./openbmcFSP2/build/tmp/deploy/sdk/openbmc-phosphor-*.sh -y
 rm -rf openbmcFSP2/build/w*
 rm -rf openbmcFSP2/build/s*
 mkdir openbmc_output
