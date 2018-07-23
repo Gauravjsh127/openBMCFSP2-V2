@@ -490,7 +490,7 @@ cp ../crash-ppc32-cross/extensions/*.so tmp/deploy/images/fsp2-x86/rootfs/usr/li
 
 cp ../meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-apps/recipes-apps/crashtool/crashtool-x86/ppc-linux-gdb tmp/deploy/images/fsp2-x86/rootfs/usr/bin/
 cd ../../
-./openbmcFSP2/build/tmp/deploy/sdk/openbmc-phosphor-*.sh -y
+cp ./openbmcFSP2/build/tmp/deploy/sdk/openbmc-phosphor-*.sh ./openbmc_output/
 rm -rf openbmcFSP2/build/w*
 rm -rf openbmcFSP2/build/s*
 mkdir openbmc_output
@@ -507,6 +507,8 @@ rm openbmc_output/fsp2-x86/core-image-minimal-*.gz
 cp -r openbmcFSP2/openBMC_PSCN . 
 
 rm -rf openbmcFSP2
+
+./openbmc_output/openbmc-phosphor-*.sh -y
 
 
 chown -R 1000 /opt/openbmc*
