@@ -1,7 +1,7 @@
 targets is:
      fsp2
 
-Build the kernel :     bitbake linux-yocto-fsp2
+Build the kernel :     bitbake linux-fsp2
 
 Build the example recipies :    bitbake hello or bitbake rootfsexample
 
