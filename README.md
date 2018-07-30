@@ -65,6 +65,7 @@ bitbake core-image-minimal
 Note 
   - For fsp2-x86 build the core-image-minimal-x86 image.
   - For cloning meta-fsp2-ibm-internal layer you need special access to github.ibm.com(Contact the repository owners for access).
+  - when switching targets you need to do a rm -r -f build/conf
 ```
 
 ### 4) Build Application sdk
@@ -72,7 +73,7 @@ Note
 bitbake core-image-minimal -c populate_sdk 
 
 Note 
- - To install SDK in host system run the script /tmp/deply/openbmc-phosphor-glibc-x86_64-core-image-minimal-powerpc-toolchain-2.4.2.sh.sh
+ - To install SDK in host system run the script tmp/deploy/sdk/openbmc-phosphor-glibc-x86_64-core-image-minimal-powerpc-toolchain-2.5.sh -y
  - SDK is installed in the path /opt/openbmc-phosphor/2.4.2 by default.
  - Always set the build environment variables defined in the file /opt/openbmc-phosphor/2.4.2/environment-setup-powerpc-openbmc-linux before using the c++/c openbmc compilers.
 ```
