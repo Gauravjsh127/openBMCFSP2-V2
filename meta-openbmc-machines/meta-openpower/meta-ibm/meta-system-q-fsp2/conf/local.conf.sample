@@ -191,6 +191,7 @@ IMAGE_INSTALL_append += " registry "
 IMAGE_INSTALL_append +="test-fsptrace-adal "
 
 ##### for SystemQ #####
+IMAGE_INSTALL_append = " kernel-modules "
 IMAGE_INSTALL_append += "hubble-scripts"
 IMAGE_INSTALL_append += "system-q-apps"
 IMAGE_INSTALL_append += "watchdog"
