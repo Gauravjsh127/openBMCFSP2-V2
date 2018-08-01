@@ -47,8 +47,8 @@ set -xeo pipefail
 
 # Default variables
 target=${target:-fsp2}
-distro=${distro:-boesedev}
-imgtag=${imgtag:-8.3.5.1}
+distro=${distro:-boesemcp}
+imgtag=${imgtag:-8.3.8}
 obmcdir=${obmcdir:-/tmp/openbmcFSP2}
 sscdir=${sscdir:-${HOME}/workspace/}
 rnd="openBMC"-${RANDOM}
@@ -116,7 +116,7 @@ if [ ! -d ${obmcext} ]; then
       cd ${obmcext}/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal
       git tag releases/"openBMC-IBM"-${CurrentDate}
       git push --tags 
-      cd -   
+      cd - 
 fi
 
 # Work out what build target we should be running and set BitBake command
@@ -272,7 +272,7 @@ elif [[ "${distro}" == boesemcp ]]; then
   RUN yum install -y --nogpgcheck git
   RUN yum install -y --nogpgcheck yum-plugin-ovl
   RUN yum install -y --nogpgcheck texinfo chrpath texi2html
-  RUN rm /usr/local/bin/gcc /usr/local/bin/g++
+  RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/ccache-3.3.4-1.el7.x86_64.rpm  ; rpm -Uvh ccache-3.3.4-1.el7.x86_64.rpm
   RUN grep -q ${GROUPS} /etc/group || groupadd -g ${GROUPS} ${USER}
   RUN grep -q ${UID} /etc/passwd || useradd -d ${HOME} -m -u ${UID} -g ${GROUPS} ${USER}
   ENV HOME ${HOME}
@@ -513,6 +513,9 @@ cp -r openbmcFSP2/openBMC_PSCN .
 rm -rf openbmcFSP2
 
 ./openbmc_output/openbmc-phosphor-*.sh -y
+
+
+
 
 EOF_SCRIPT
 
