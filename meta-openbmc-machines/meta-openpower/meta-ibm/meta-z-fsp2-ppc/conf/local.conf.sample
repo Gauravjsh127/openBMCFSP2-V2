@@ -200,7 +200,15 @@ IMAGE_INSTALL_append += " registry registry-dev registry-dbg "
 
 IMAGE_INSTALL_append += " watchdogfld watchdogfld-dev watchdogfld-dbg "
 
+IMAGE_INSTALL_append += "iicmaster "
+
+IMAGE_INSTALL_append += "iomux-tool "
+
 ################ openBMC packages ############################################
+
+IMAGE_INSTALL_append += "mosquitto"
+
+IMAGE_INSTALL_append += "mosquitto-clients"
 
 IMAGE_INSTALL_append += " grpc grpc-dev grpc-dbg "
 
@@ -269,9 +277,6 @@ IMAGE_INSTALL_append += "ifenslave ethtool kexec-tools kexec-tools-dbg "
 IMAGE_INSTALL_append += "udev "
 
 IMAGE_INSTALL_append += "trace-cmd trace-cmd-dbg "
-
-IMAGE_INSTALL_append += "iicmaster "
-
 
 ################ Debug packages ############################################
 
