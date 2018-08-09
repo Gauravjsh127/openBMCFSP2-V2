@@ -202,7 +202,7 @@ IMAGE_INSTALL_append += " watchdogfld watchdogfld-dev watchdogfld-dbg "
 
 IMAGE_INSTALL_append += "iicmaster "
 
-IMAGE_INSTALL_append += "iomux-tool "
+IMAGE_INSTALL_append += "iomuxtool "
 
 ################ openBMC packages ############################################
 
