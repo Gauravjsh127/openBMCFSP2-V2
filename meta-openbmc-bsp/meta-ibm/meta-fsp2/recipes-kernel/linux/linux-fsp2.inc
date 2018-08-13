@@ -2,9 +2,11 @@ DESCRIPTION = "Linux kernel for the FSP2 system on a chip"
 SECTION = "kernel"
 LICENSE = "GPLv2"
 
+PROVIDES += "virtual/kernel"
+
 KCONFIG_MODE="--alldefconfig"
 
-KSRC ?= "git://github.com/openbmc/linux;protocol=git;branch=dev-4.13"
+KSRC ?= "git://github.com/openbmc/linux;protocol=git;branch=${KBRANCH}"
 SRC_URI = "${KSRC}"
 
 LINUX_VERSION_EXTENSION ?= "-${SRCREV}"
@@ -14,15 +16,6 @@ PV = "${LINUX_VERSION}+git${SRCPV}"
 COMPATIBLE_MACHINE_${MACHINE} = "^${MACHINE}$"
 KERNEL_CLASSES ?= "kernel-uimage"
 
-do_patch_append() {
-        for DTB in "${KERNEL_DEVICETREE}"; do
-               DT=`basename ${DTB} .dtb`
-                if [ -r "${WORKDIR}/${DT}.dts" ]; then
-                        cp ${WORKDIR}/${DT}.dts \
-                                ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts
-               fi
-       done
-}
 
 DEPENDS = "u-boot-mkimage-native"
 
@@ -31,3 +24,7 @@ require recipes-kernel/linux/linux-yocto.inc
 
 KERNEL_FEATURES_remove = "phosphor-gpio-keys"
 INSANE_SKIP_kernel-vmlinux = "ldflags"
+
+
+# From 4.16+ the COPYING file changed
+LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"

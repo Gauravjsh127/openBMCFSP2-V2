@@ -1,0 +1,67 @@
+diff --git a/include/linux/compiler.h b/include/linux/compiler.h
+index ae6b05629ca1..186f077daa3f 100644
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -8,6 +8,28 @@
+ 
+ #ifdef __KERNEL__
+ 
++struct ftrace_branch_data {
++	const char *func;
++	const char *file;
++	unsigned line;
++	union {
++		struct {
++			unsigned long correct;
++			unsigned long incorrect;
++		};
++		struct {
++			unsigned long miss;
++			unsigned long hit;
++		};
++		unsigned long miss_hit[2];
++	};
++};
++
++struct ftrace_likely_data {
++	struct ftrace_branch_data	data;
++	unsigned long			constant;
++};
++
+ /*
+  * Note: DISABLE_BRANCH_PROFILING can be used by special lowlevel code
+  * to disable branch tracing on a per file basis.
+
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index ae6b05629ca1..186f077daa3f 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -84,27 +84,7 @@ extern void __chk_io_ptr(const volatile void __iomem *);
+  * specific implementations come from the above header files
+  */
+ 
+-struct ftrace_branch_data {
+-	const char *func;
+-	const char *file;
+-	unsigned line;
+-	union {
+-		struct {
+-			unsigned long correct;
+-			unsigned long incorrect;
+-		};
+-		struct {
+-			unsigned long miss;
+-			unsigned long hit;
+-		};
+-		unsigned long miss_hit[2];
+-	};
+-};
+-
+-struct ftrace_likely_data {
+-	struct ftrace_branch_data	data;
+-	unsigned long			constant;
+-};
++
+ 
+ #endif /* __KERNEL__ */
+ 

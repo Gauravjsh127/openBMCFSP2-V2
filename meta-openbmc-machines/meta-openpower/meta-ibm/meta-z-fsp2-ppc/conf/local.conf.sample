@@ -206,9 +206,9 @@ IMAGE_INSTALL_append += "iomuxtool "
 
 ################ openBMC packages ############################################
 
-IMAGE_INSTALL_append += "mosquitto"
+#IMAGE_INSTALL_append += "mosquitto"
 
-IMAGE_INSTALL_append += "mosquitto-clients"
+#IMAGE_INSTALL_append += "mosquitto-clients"
 
 IMAGE_INSTALL_append += " grpc grpc-dev grpc-dbg "
 

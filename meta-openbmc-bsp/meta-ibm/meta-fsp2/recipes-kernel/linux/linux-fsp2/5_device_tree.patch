@@ -1,5 +1,5 @@
 diff --git a/arch/powerpc/boot/dts/fsp2.dts b/arch/powerpc/boot/dts/fsp2.dts
-index 6a63026..0649120 100644
+index 9311b86..6caf8af 100644
 --- a/arch/powerpc/boot/dts/fsp2.dts
 +++ b/arch/powerpc/boot/dts/fsp2.dts
 @@ -389,6 +389,14 @@
@@ -66,8 +66,7 @@ index 6a63026..0649120 100644
 +                                         /*Link 2*/ 2 &UIC1_3 10 0x4 
 +                                         /*Link 3*/ 3 &UIC1_3 11 0x4>;
 +                };  
- 
--		mmc0: mmc@20c0000 {
++
 +		EDMA0: dma.0 {
 +			#interrupt-cells = <1>;
 +			#address-cells = <0>;
@@ -166,7 +165,8 @@ index 6a63026..0649120 100644
 +			interrupt-parent = <&UIC1_3>;
 +			interrupts = <21 0x4	/* INT  */
 +				      22 0x4>;  /* WKUP */
-+
+ 
+-		mmc0: mmc@20c0000 {
 +		};
 +		
 +		mmc0: sdhci@020c0000 {
@@ -230,12 +230,13 @@ index 6a63026..0649120 100644
  			UART0: serial@b0020000 {
  				device_type = "serial";
  				compatible = "ns16550";
-@@ -581,8 +772,70 @@
+@@ -581,23 +772,85 @@
  				interrupt-parent = <&UIC0>;
  				interrupts = <31 0x4>;
  			};
 -		};
  
+-		OHCI1: ohci@2040000 {
 +			IIC0: i2c@b0020100 {
 +				compatible = "ibm,iic";
 +				reg = <0xb0020100 0x12>;
@@ -299,7 +300,23 @@ index 6a63026..0649120 100644
 +                };
 +
 +		//TODO: USB, PCIe, P Mailbox
- 		OHCI1: ohci@02040000 {
++		OHCI1: ohci@02040000 {
  			compatible = "ohci-le";
  			reg = <0x02040000 0xa0>;
-
+ 			interrupt-parent = <&UIC1_3>;
+ 			interrupts = <28 0x8 29 0x8>;
+ 		};
+ 
+-		OHCI2: ohci@2080000 {
++		OHCI2: ohci@02080000 {
+ 			compatible = "ohci-le";
+ 			reg = <0x02080000 0xa0>;
+ 			interrupt-parent = <&UIC1_3>;
+ 			interrupts = <30 0x8 31 0x8>;
+ 		};
+ 
+-		EHCI: ehci@2000000 {
++		EHCI: ehci@02000000 {
+ 			compatible = "usb-ehci";
+ 			reg = <0x02000000 0xa4>;
+ 			interrupt-parent = <&UIC1_3>;
