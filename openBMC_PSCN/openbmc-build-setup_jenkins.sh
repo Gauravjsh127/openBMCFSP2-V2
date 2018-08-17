@@ -271,7 +271,7 @@ elif [[ "${distro}" == boesemcp ]]; then
   RUN yum install -y --nogpgcheck yum-plugin-ovl
   RUN yum install -y  --nogpgcheck curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
   RUN cd /usr/src;wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.16.2.tar.gz;tar xzf git-2.16.2.tar.gz
-  RUN cd git-2.16.2; make prefix=/usr/local/git all; make prefix=/usr/local/git install;echo "export PATH=/usr/local/git/bin:$PATH" >> /etc/bashrc;source /etc/bashrc
+  RUN cd git*; make prefix=/usr/local/git all; make prefix=/usr/local/git install;echo "export PATH=/usr/local/git/bin:$PATH" >> /etc/bashrc;source /etc/bashrc
   RUN git --version
   RUN yum install -y --nogpgcheck texinfo chrpath texi2html
   RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/ccache-3.3.4-1.el7.x86_64.rpm  ; rpm -Uvh ccache-3.3.4-1.el7.x86_64.rpm
