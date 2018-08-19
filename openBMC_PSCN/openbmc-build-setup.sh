@@ -116,7 +116,7 @@ if [ ! -d ${obmcext} ]; then
       cd ${obmcext}/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal
       git tag releases/"openBMC-IBM"-${CurrentDate}
       git push --tags 
-      cd - 
+      cd -   
 fi
 
 # Work out what build target we should be running and set BitBake command
@@ -270,7 +270,7 @@ elif [[ "${distro}" == boesemcp ]]; then
   ENV LC_ALL en_US.UTF-8
   RUN yum-config-manager --add-repo http://mirror.centos.org/centos/7/os/x86_64/
   RUN yum install -y --nogpgcheck yum-plugin-ovl
-  RUN yum install -y  --nogpgcheck curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
+  RUN yum install -y --nogpgcheck curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
   RUN cd /usr/src;wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.16.2.tar.gz;tar xzf git-2.16.2.tar.gz
   RUN cd git-2.16.2; make prefix=/usr/local/git all; make prefix=/usr/local/git install;echo "export PATH=/usr/local/git/bin:$PATH" >> /etc/bashrc;source /etc/bashrc
   RUN git --version
