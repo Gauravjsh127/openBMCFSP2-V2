@@ -206,9 +206,9 @@ IMAGE_INSTALL_append += "iicmaster "
 
 ################ openBMC packages ############################################
 
-#IMAGE_INSTALL_append += "mosquitto"
+IMAGE_INSTALL_append += "mosquitto mosquitto-dev "
 
-#IMAGE_INSTALL_append += "mosquitto-clients"
+IMAGE_INSTALL_append += "mosquitto-clients"
 
 IMAGE_INSTALL_append += " grpc grpc-dev grpc-dbg "
 

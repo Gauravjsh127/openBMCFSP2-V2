@@ -30,7 +30,7 @@ PACKAGECONFIG[uuid] = ",,util-linux"
 EXTRA_OEMAKE = "${@bb.utils.contains('PACKAGECONFIG', 'dns-srv', 'WITH_SRV=yes', 'WITH_SRV=no', d)} \
                 STRIP=/bin/true \
                 WITH_DOCS=no \
-                ${@bb.utils.contains('PACKAGECONFIG', 'ssl', 'WITH_TLS=yes WITH_TLS_PSK=yes', 'WITH_TLS=no WITH_TLS_PSK=no', d)} \
+                ${@bb.utils.contains('PACKAGECONFIG', 'ssl', 'WITH_TLS=yes WITH_TLS_PSK=no', 'WITH_TLS=no WITH_TLS_PSK=no', d)} \
                 ${@bb.utils.contains('PACKAGECONFIG', 'uuid', 'WITH_UUID=yes', 'WITH_UUID=no', d)}"
 
 export LIB_SUFFIX="${@d.getVar('baselib', True).replace('lib', '')}"
