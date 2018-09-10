@@ -1,0 +1,38 @@
+diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
+index 0904492..fc86483 100644
+--- a/arch/powerpc/kernel/traps.c
++++ b/arch/powerpc/kernel/traps.c
+@@ -276,6 +276,17 @@ NOKPROBE_SYMBOL(__die);
+ 
+ void die(const char *str, struct pt_regs *regs, long err)
+ {
++	#ifdef CONFIG_FSP
++	if (debugger(regs))
++		return 1;
++
++	/* Always route die() to panic() to ensure a singular error path. */
++	printk("About to Panic [%s][%s][%s] sig: %ld\n", __FILE__, __func__,
++	       str, err);
++	show_regs(regs);
++	panic(str);
++#endif
++
+ 	unsigned long flags;
+ 
+ 	/*
+@@ -2069,9 +2080,12 @@ NOKPROBE_SYMBOL(unrecoverable_exception);
+  */
+ void __attribute__ ((weak)) WatchdogHandler(struct pt_regs *regs)
+ {
+-	/* Generic WatchdogHandler, implement your own */
+-	mtspr(SPRN_TCR, mfspr(SPRN_TCR)&(~TCR_WIE));
+-	return;
++	char str[] = "WatchdogHandler";
++	/* Always route die() to panic() to ensure a singular error path. */
++	printk(KERN_EMERG "About to Panic [%s][%s][%s]\n", __FILE__, __func__,
++	       str);
++	show_regs(regs);
++	panic(str);
+ }
+ 
+ void WatchdogException(struct pt_regs *regs)

@@ -34,3 +34,6 @@ SRC_URI += "file://8_SEGFAULT_panic.patch"
 
 #### Segmentation fault Kernel panic patch
 SRC_URI += "file://9_compiler_types.patch"
+
+#### Segmentation fault Kernel panic patch
+SRC_URI += "file://10_WATCHDOG_traps.patch"
