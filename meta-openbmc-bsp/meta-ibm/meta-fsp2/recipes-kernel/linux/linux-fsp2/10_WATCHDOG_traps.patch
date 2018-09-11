@@ -6,7 +6,7 @@ index 0904492..fc86483 100644
  
  void die(const char *str, struct pt_regs *regs, long err)
  {
-+	#ifdef CONFIG_FSP
++	
 +	if (debugger(regs))
 +		return 1;
 +
@@ -15,7 +15,7 @@ index 0904492..fc86483 100644
 +	       str, err);
 +	show_regs(regs);
 +	panic(str);
-+#endif
++
 +
  	unsigned long flags;
  
