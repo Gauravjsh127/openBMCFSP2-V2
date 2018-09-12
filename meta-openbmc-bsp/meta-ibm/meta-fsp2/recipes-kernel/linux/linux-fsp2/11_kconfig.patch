@@ -1,0 +1,224 @@
+diff --git a/arch/powerpc/platforms/44x/Kconfig b/arch/powerpc/platforms/44x/Kconfig
+--- a/arch/powerpc/platforms/44x/Kconfig
++++ b/arch/powerpc/platforms/44x/Kconfig
+@@ -1,9 +1,7 @@
+-# SPDX-License-Identifier: GPL-2.0
+ config PPC_47x
+ 	bool "Support for 47x variant"
+ 	depends on 44x
+ 	default n
+-	select MPIC
+ 	help
+ 	  This option enables support for the 47x family of processors and is
+ 	  not currently compatible with other 44x or 46x varients
+@@ -27,7 +25,7 @@
+ 	select PCI_MSI
+ 	select PPC4xx_MSI
+ 	select PPC4xx_PCI_EXPRESS
+-	select IBM_EMAC_RGMII if IBM_EMAC
++	select IBM_EMAC_RGMII
+ 	help
+ 	  This option enables support for the APM APM821xx Evaluation board.
+ 
+@@ -126,8 +124,8 @@
+ 	select PPC4xx_PCI_EXPRESS
+ 	select PCI_MSI
+ 	select PPC4xx_MSI
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select IBM_EMAC_ZMII if IBM_EMAC
++	select IBM_EMAC_RGMII
++	select IBM_EMAC_ZMII
+ 	help
+ 	  This option enables support for the AMCC PPC460EX evaluation board.
+ 
+@@ -139,8 +137,8 @@
+ 	select 460EX # Odd since it uses 460GT but the effects are the same
+ 	select PCI
+ 	select PPC4xx_PCI_EXPRESS
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select IBM_EMAC_ZMII if IBM_EMAC
++	select IBM_EMAC_RGMII
++	select IBM_EMAC_ZMII
+ 	help
+ 	  This option enables support for the AMCC PPC460GT evaluation board.
+ 
+@@ -165,7 +163,7 @@
+ 	select 460SX
+ 	select PCI
+ 	select PPC4xx_PCI_EXPRESS
+-	select IBM_EMAC_RGMII if IBM_EMAC
++	select IBM_EMAC_RGMII
+ 	help
+ 	  This option enables support for the AMCC PPC460SX evaluation board.
+ 
+@@ -200,43 +198,34 @@
+ 	help
+ 	  This option enables support for the IBM Currituck (476fpe) evaluation board
+ 
+-config FSP2
+-	bool "IBM FSP2 (476fpe) Support"
+-	depends on PPC_47x
++config FSP1
++	bool "FSP-1"
++	depends on 44x
+ 	default n
+-	select 476FPE
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select COMMON_CLK
+-	select DEFAULT_UIMAGE
++	select IBM_NEW_EMAC_EMAC4
++	select USB_ARCH_HAS_OHCI
++	select FSP
+ 	help
+-	  This option enables support for the IBM FSP2 (476fpe) board
++	  This option enables support for the IBM PPC 440 FSP1 board.
+ 
+-config AKEBONO
+-	bool "IBM Akebono (476gtr) Support"
+-	depends on PPC_47x
++config FSP
++	select DEFAULT_UIMAGE
++	bool
++
++config FSP2
++	bool "FSP-2"
++	depends on 44x
+ 	default n
+-	select SWIOTLB
+-	select 476FPE
+-	select PPC4xx_PCI_EXPRESS
+-	select PCI_MSI
+-	select PPC4xx_HSTA_MSI
+-	select I2C
+-	select I2C_IBM_IIC
+-	select NETDEVICES
+-	select ETHERNET
+-	select NET_VENDOR_IBM
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select USB if USB_SUPPORT
+-	select USB_OHCI_HCD_PLATFORM if USB_OHCI_HCD
+-	select USB_EHCI_HCD_PLATFORM if USB_EHCI_HCD
+-	select MMC_SDHCI
+-	select MMC_SDHCI_PLTFM
+-	select ATA
+-	select SATA_AHCI_PLATFORM
++	select PPC_476
++	select PPC_FPU
++	select 476FPE_ERR46
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_RGMII
++	select USB_ARCH_HAS_OHCI
++	select USB_ARCH_HAS_EHCI
++	select FSP
+ 	help
+-	  This option enables support for the IBM Akebono (476gtr) evaluation board
+-
++	  This option enables support for the IBM FSP-2 chip.
+ 
+ config ICON
+ 	bool "Icon"
+@@ -254,7 +243,6 @@
+ 	depends on 44x
+ 	default n
+ 	select XILINX_VIRTEX_5_FXT
+-	select XILINX_INTC
+ 	help
+ 	  This option enables generic support for Xilinx Virtex based boards
+ 	  that use a 440 based processor in the Virtex 5 FXT FPGA architecture.
+@@ -287,7 +275,7 @@
+ config PPC4xx_GPIO
+ 	bool "PPC4xx GPIO support"
+ 	depends on 44x
+-	select GPIOLIB
++	select ARCH_REQUIRE_GPIOLIB
+ 	help
+ 	  Enable gpiolib support for ppc440 based boards
+ 
+@@ -304,54 +292,55 @@
+ 	bool
+ 	select PPC_FPU
+ 	select IBM440EP_ERR42
+-	select IBM_EMAC_ZMII if IBM_EMAC
++	select IBM_EMAC_ZMII
++	select USB_ARCH_HAS_OHCI
+ 
+ config 440EPX
+ 	bool
+ 	select PPC_FPU
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select IBM_EMAC_ZMII if IBM_EMAC
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_RGMII
++	select IBM_EMAC_ZMII
+ 	select USB_EHCI_BIG_ENDIAN_MMIO
+ 	select USB_EHCI_BIG_ENDIAN_DESC
+ 
+ config 440GRX
+ 	bool
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select IBM_EMAC_ZMII if IBM_EMAC
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_RGMII
++	select IBM_EMAC_ZMII
+ 
+ config 440GP
+ 	bool
+-	select IBM_EMAC_ZMII if IBM_EMAC
++	select IBM_EMAC_ZMII
+ 
+ config 440GX
+ 	bool
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select IBM_EMAC_ZMII if IBM_EMAC #test only
+-	select IBM_EMAC_TAH if IBM_EMAC  #test only
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_RGMII
++	select IBM_EMAC_ZMII #test only
++	select IBM_EMAC_TAH  #test only
+ 
+ config 440SP
+ 	bool
+ 
+ config 440SPe
+ 	bool
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
++	select IBM_EMAC_EMAC4
+ 
+ config 460EX
+ 	bool
+ 	select PPC_FPU
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_TAH if IBM_EMAC
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_TAH
+ 
+ config 460SX
+ 	bool
+ 	select PPC_FPU
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_RGMII if IBM_EMAC
+-	select IBM_EMAC_ZMII if IBM_EMAC
+-	select IBM_EMAC_TAH if IBM_EMAC
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_RGMII
++	select IBM_EMAC_ZMII
++	select IBM_EMAC_TAH
+ 
+ config 476FPE
+ 	bool
+@@ -360,8 +349,8 @@
+ config APM821xx
+ 	bool
+ 	select PPC_FPU
+-	select IBM_EMAC_EMAC4 if IBM_EMAC
+-	select IBM_EMAC_TAH if IBM_EMAC
++	select IBM_EMAC_EMAC4
++	select IBM_EMAC_TAH
+ 
+ config 476FPE_ERR46
+ 	depends on 476FPE
+
