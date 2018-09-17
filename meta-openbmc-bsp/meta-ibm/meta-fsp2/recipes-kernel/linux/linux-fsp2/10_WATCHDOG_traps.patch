@@ -1,38 +1,14 @@
 diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
-index 0904492..fc86483 100644
+index 0904492..d4994ad 100644
 --- a/arch/powerpc/kernel/traps.c
 +++ b/arch/powerpc/kernel/traps.c
-@@ -276,6 +276,17 @@ NOKPROBE_SYMBOL(__die);
- 
- void die(const char *str, struct pt_regs *regs, long err)
- {
-+	
-+	if (debugger(regs))
-+		return 1;
-+
-+	/* Always route die() to panic() to ensure a singular error path. */
-+	printk("About to Panic [%s][%s][%s] sig: %ld\n", __FILE__, __func__,
-+	       str, err);
-+	show_regs(regs);
-+	panic(str);
-+
-+
- 	unsigned long flags;
- 
- 	/*
-@@ -2069,9 +2080,12 @@ NOKPROBE_SYMBOL(unrecoverable_exception);
-  */
+@@ -2070,8 +2070,7 @@ NOKPROBE_SYMBOL(unrecoverable_exception);
  void __attribute__ ((weak)) WatchdogHandler(struct pt_regs *regs)
  {
--	/* Generic WatchdogHandler, implement your own */
+ 	/* Generic WatchdogHandler, implement your own */
 -	mtspr(SPRN_TCR, mfspr(SPRN_TCR)&(~TCR_WIE));
 -	return;
-+	char str[] = "WatchdogHandler";
-+	/* Always route die() to panic() to ensure a singular error path. */
-+	printk(KERN_EMERG "About to Panic [%s][%s][%s]\n", __FILE__, __func__,
-+	       str);
-+	show_regs(regs);
-+	panic(str);
++	die("PowerPC Book-E Watchdog Exception", regs, SIGSEGV);
  }
  
  void WatchdogException(struct pt_regs *regs)
