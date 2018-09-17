@@ -2,13 +2,19 @@ diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
 index 0904492..d4994ad 100644
 --- a/arch/powerpc/kernel/traps.c
 +++ b/arch/powerpc/kernel/traps.c
-@@ -2070,8 +2070,7 @@ NOKPROBE_SYMBOL(unrecoverable_exception);
+@@ -2069,9 +2080,12 @@ NOKPROBE_SYMBOL(unrecoverable_exception);
+  */
  void __attribute__ ((weak)) WatchdogHandler(struct pt_regs *regs)
  {
- 	/* Generic WatchdogHandler, implement your own */
+-	/* Generic WatchdogHandler, implement your own */
 -	mtspr(SPRN_TCR, mfspr(SPRN_TCR)&(~TCR_WIE));
 -	return;
-+	die("PowerPC Book-E Watchdog Exception", regs, SIGSEGV);
++		mtspr(SPRN_TCR, mfspr(SPRN_TCR) & ~TCR_WIE);
++	show_regs(regs);
++	panic("Received Watchdog Critical Interrupt");
++	
++	
++	
  }
  
  void WatchdogException(struct pt_regs *regs)
