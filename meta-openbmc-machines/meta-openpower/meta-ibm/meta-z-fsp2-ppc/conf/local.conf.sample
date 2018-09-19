@@ -289,4 +289,5 @@ IMAGE_INSTALL_append +="babeltrace babeltrace-dev"
 
 IMAGE_INSTALL_append +="lttng-tools lttng-tools-dev "
 
+IMAGE_INSTALL_append +="lttng-modules lttng-modules-dev "
 
