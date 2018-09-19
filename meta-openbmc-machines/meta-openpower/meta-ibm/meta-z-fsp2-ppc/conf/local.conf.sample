@@ -283,5 +283,10 @@ IMAGE_INSTALL_append += "trace-cmd trace-cmd-dbg "
 
 IMAGE_INSTALL_append += "glibc-dbg " 
 
+IMAGE_INSTALL_append +="lttng-ust "
+
+IMAGE_INSTALL_append +="babeltrace babeltrace-dev"
+
+IMAGE_INSTALL_append +="lttng-tools lttng-tools-dev "
 
 
