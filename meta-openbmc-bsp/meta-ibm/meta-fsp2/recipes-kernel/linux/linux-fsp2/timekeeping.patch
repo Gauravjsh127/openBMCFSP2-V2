@@ -1,0 +1,57 @@
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index 49cbcee..12022ee 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -2030,9 +2030,15 @@ void update_wall_time(void)
+ 	struct timekeeper *real_tk = &tk_core.timekeeper;
+ 	struct timekeeper *tk = &shadow_timekeeper;
+ 	u64 offset;
++	u64 offset_save;
+ 	int shift = 0, maxshift;
++	int shift_save;
+ 	unsigned int clock_set = 0;
+ 	unsigned long flags;
++	int loop_count=0;
++	int max_loop=2;
++	static int max_traces = 4;
++	static int trace_count = 0;
+ 
+ 	raw_spin_lock_irqsave(&timekeeper_lock, flags);
+ 
+@@ -2067,11 +2073,35 @@ void update_wall_time(void)
+ 	/* Bound shift to one less than what overflows tick_length */
+ 	maxshift = (64 - (ilog2(ntp_tick_length())+1)) - 1;
+ 	shift = min(shift, maxshift);
++	shift_save = shift;
++	loop_count=0;
++	offset_save=offset;
+ 	while (offset >= tk->cycle_interval) {
+ 		offset = logarithmic_accumulation(tk, offset, shift,
+ 							&clock_set);
+-		if (offset < tk->cycle_interval<<shift)
++		if (offset < tk->cycle_interval<<shift) {
++			if (loop_count>max_loop && trace_count < max_traces) {
++				trace_printk("loop - offset 0x%llx cycle_interval 0x%llx shift %d\n",offset,tk->cycle_interval,shift);
++			}
+ 			shift--;
++		}
++
++		if (loop_count>max_loop) {
++			if (trace_count < max_traces) { 
++				trace_printk("loop_count reached\n"); 
++			}
++			if ( (offset >= tk->cycle_interval) && (tk->cycle_interval > 1) ) {
++				offset = tk->cycle_interval-1;
++				if (trace_count < max_traces) {
++					trace_printk("offset set to 0x%llx\n",offset);
++					trace_printk("saved offset 0x%llx maxshift %d\n",offset_save,maxshift);
++					trace_printk("shift %d  shift_saved %d\n",shift, shift_save);
++					trace_printk("clock_set %d\n",clock_set);
++					trace_count++;
++				}
++			}
++		}
++		loop_count++;
+ 	}
+ 
+ 	/* Adjust the multiplier to correct NTP error */
