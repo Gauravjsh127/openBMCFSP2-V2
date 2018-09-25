@@ -44,3 +44,5 @@ SRC_URI += "file://11_kconfig.patch"
 #### rb patch ..
 SRC_URI += "file://12_ringbuffer.patch"
 
+### adjust timing for simics
+SRC_URI += "file://timekeeping.patch"
