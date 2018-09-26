@@ -23,6 +23,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-drivers \
   ##OEROOT##/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-adals \
   ##OEROOT##/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-apps \  
+  ##OEROOT##/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-boot \  
 "
 BBLAYERS_NON_REMOVABLE ?= " \
   ##OEROOT##/meta \
