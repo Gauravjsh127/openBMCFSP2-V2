@@ -58,6 +58,8 @@ IMAGE_INSTALL_append += "tiny-syslogd-x86 "
 
 IMAGE_INSTALL_append += "zeromq zeromq-dev "
 
+IMAGE_INSTALL_append += "ecc-x86 "
+
 ################ openBMC packages ############################################
 
 IMAGE_INSTALL_append += "trace-cmd busybox "
