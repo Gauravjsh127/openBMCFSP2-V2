@@ -459,6 +459,7 @@ bitbake -c clean core-image-minimal-x86
 bitbake core-image-minimal-x86 
 
 bitbake mif-fsp2-ddr3-x86
+bitbake mif-fsp2-ddr4-x86
 
 ## Extract core-image-minimal-fsp2.cpio.gz files inside tmp/deploy/images/fsp2 folder inside build directory
 cd tmp/deploy/images/fsp2
@@ -511,7 +512,8 @@ cd ..
 cp -r openbmcFSP2/build/tmp/deploy/images/fsp2/rootfs/*  openbmc_output/fsp2-ppc
 cp -r openbmcFSP2/build/tmp/deploy/images/fsp2-x86/rootfs/*  openbmc_output/fsp2-x86
 
-cp *  openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/git/*.mif openbmc_output/fsp2-ppc/images/
+cp *  openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/*.mif openbmc_output/fsp2-ppc/images/
+cp *  openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr4-x86/1.0-r0/mif-fsp2-ddr4-x86-code/*.mif openbmc_output/fsp2-ppc/images/
 
 rm openbmc_output/fsp2-ppc/core-image-minimal-*.gz
 rm openbmc_output/fsp2-x86/core-image-minimal-*.gz
