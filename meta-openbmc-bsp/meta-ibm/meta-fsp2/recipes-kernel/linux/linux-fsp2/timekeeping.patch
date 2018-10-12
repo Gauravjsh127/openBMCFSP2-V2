@@ -1,57 +1,64 @@
+diff --git a/arch/powerpc/include/asm/time.h b/arch/powerpc/include/asm/time.h
+index db546c0..f004b99 100644
+--- a/arch/powerpc/include/asm/time.h
++++ b/arch/powerpc/include/asm/time.h
+@@ -77,7 +77,15 @@ static inline unsigned int get_tbu(void)
+ 	asm volatile("mfspr %0, 0x3dc" : "=r" (tbu));
+ 	return tbu;
+ #else
+-	return mftbu();
++	unsigned int tbu;
++	tbu=mftbu();
++	trace_printk("tbu: 0x%08x  ",tbu);
++	if  ( (tbu & 0xFF000000) != 0x0 )
++	{
++		tbu = tbu & 0x00FFFFFF;
++		trace_printk("tbu after mask: 0x%08x\n",tbu);
++	}
++	return tbu;
+ #endif
+ }
+ #endif /* !CONFIG_PPC64 */
 diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index 49cbcee..12022ee 100644
+index 49cbcee..8b9a87e 100644
 --- a/kernel/time/timekeeping.c
 +++ b/kernel/time/timekeeping.c
-@@ -2030,9 +2030,15 @@ void update_wall_time(void)
+@@ -25,6 +25,7 @@
+ #include <linux/stop_machine.h>
+ #include <linux/pvclock_gtod.h>
+ #include <linux/compiler.h>
++#include <asm/reg.h>
+ 
+ #include "tick-internal.h"
+ #include "ntp_internal.h"
+@@ -2030,9 +2031,12 @@ void update_wall_time(void)
  	struct timekeeper *real_tk = &tk_core.timekeeper;
  	struct timekeeper *tk = &shadow_timekeeper;
  	u64 offset;
-+	u64 offset_save;
++	u64 mono,mono_last, mono_mask;
  	int shift = 0, maxshift;
-+	int shift_save;
  	unsigned int clock_set = 0;
  	unsigned long flags;
-+	int loop_count=0;
-+	int max_loop=2;
-+	static int max_traces = 4;
-+	static int trace_count = 0;
++	unsigned long tbu,tbl;
++	u64 tb;
  
  	raw_spin_lock_irqsave(&timekeeper_lock, flags);
  
-@@ -2067,11 +2073,35 @@ void update_wall_time(void)
- 	/* Bound shift to one less than what overflows tick_length */
- 	maxshift = (64 - (ilog2(ntp_tick_length())+1)) - 1;
- 	shift = min(shift, maxshift);
-+	shift_save = shift;
-+	loop_count=0;
-+	offset_save=offset;
- 	while (offset >= tk->cycle_interval) {
- 		offset = logarithmic_accumulation(tk, offset, shift,
- 							&clock_set);
--		if (offset < tk->cycle_interval<<shift)
-+		if (offset < tk->cycle_interval<<shift) {
-+			if (loop_count>max_loop && trace_count < max_traces) {
-+				trace_printk("loop - offset 0x%llx cycle_interval 0x%llx shift %d\n",offset,tk->cycle_interval,shift);
-+			}
- 			shift--;
-+		}
-+
-+		if (loop_count>max_loop) {
-+			if (trace_count < max_traces) { 
-+				trace_printk("loop_count reached\n"); 
-+			}
-+			if ( (offset >= tk->cycle_interval) && (tk->cycle_interval > 1) ) {
-+				offset = tk->cycle_interval-1;
-+				if (trace_count < max_traces) {
-+					trace_printk("offset set to 0x%llx\n",offset);
-+					trace_printk("saved offset 0x%llx maxshift %d\n",offset_save,maxshift);
-+					trace_printk("shift %d  shift_saved %d\n",shift, shift_save);
-+					trace_printk("clock_set %d\n",clock_set);
-+					trace_count++;
-+				}
-+			}
-+		}
-+		loop_count++;
- 	}
+@@ -2043,8 +2047,17 @@ void update_wall_time(void)
+ #ifdef CONFIG_ARCH_USES_GETTIMEOFFSET
+ 	offset = real_tk->cycle_interval;
+ #else
++	mono=tk_clock_read(&tk->tkr_mono);
++	mono_last=tk->tkr_mono.cycle_last;
++	mono_mask=tk->tkr_mono.mask;
+ 	offset = clocksource_delta(tk_clock_read(&tk->tkr_mono),
+ 				   tk->tkr_mono.cycle_last, tk->tkr_mono.mask);
++	trace_printk("clock name %s\n",tk->tkr_mono.clock->name);
++	trace_printk("offset: 0x%llx mono 0x%llx mono_last 0x%llx mono_mask 0x%llx\n",offset,mono,mono_last,mono_mask);	
++	tbu=mftbu();
++	tbl=mftbl();
++	tb=get_tb();
++	trace_printk("tbu: 0x%08lx tbl 0x%08lx  tb 0x%016llx\n",tbu,tbl,tb);
+ #endif
  
- 	/* Adjust the multiplier to correct NTP error */
+ 	/* Check if there's really nothing to do */
