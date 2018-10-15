@@ -507,7 +507,13 @@ rm -rf openbmcFSP2/build/s*
 cd openbmc_output
 mkdir fsp2-x86
 mkdir fsp2-ppc
+mkdir fsp2-x86/src
+mkdir fsp2-x86/src/fsptrace-adal
+
 cd ..
+cp -r openbmcFSP2/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-adals/recipes-adals/fsptrace/fsptrace-adal/* openbmc_output/fsp2-x86/src/fsptrace-adal/
+cp -r openbmcFSP2/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-adals/recipes-adals/include/fsptrace/* openbmc_output/fsp2-x86/src/fsptrace-adal/
+
 cp -r openbmcFSP2/build/tmp/deploy/images/fsp2/rootfs/*  openbmc_output/fsp2-ppc
 cp -r openbmcFSP2/build/tmp/deploy/images/fsp2-x86/rootfs/*  openbmc_output/fsp2-x86
 
