@@ -2107,7 +2107,7 @@ index 0000000..e591381
 +
 +	buf = (char *)kmalloc(1024, GFP_KERNEL);
 +
-+	//pra_read(PRA_CALLOUT, &callout);
++	pra_read(PRA_CALLOUT, &callout);
 +	len += sprintf(buf+len, "Code:\t\t\t0x%08x\n", callout);
 +	len += sprintf(buf+len, "Summary:\t\t%s\n", callout_str[callout & PRA_MASK_SUMMARY]);
 +	len += sprintf(buf+len, "Icache Parity Error:\t%s\n",
@@ -2180,7 +2180,7 @@ index 0000000..e591381
 +	default: ;
 +	}
 +
-+	//ret = pra_read(PRA_BOOT_STATUS, &pra_bootstatus);
++	ret = pra_read(PRA_BOOT_STATUS, &pra_bootstatus);
 +	if (ret < 0) {
 +		printk("FSP RESET: cannot read PRA\n");
 +		goto exit;
@@ -2251,7 +2251,7 @@ index 0000000..e591381
 +	}
 +
 +	/* read/change/write the PRA field */
-+	//ret = pra_read(PRA_BOOT_STATUS, &pra_bootstatus);
++	ret = pra_read(PRA_BOOT_STATUS, &pra_bootstatus);
 +	if (ret < 0) {
 +		printk(KERN_ERR "FSP RESET: cannot read PRA\n");
 +		return ret;
@@ -2507,7 +2507,7 @@ index 0000000..e591381
 +{
 +	uint32_t tmp;
 +
-+	//pra_read(PRA_ORIG_RSTINFO, &tmp);
++	pra_read(PRA_ORIG_RSTINFO, &tmp);
 +	info->reason = tmp >> 16;
 +	info->origin = (tmp >> 8) & 0xFF;
 +	info->type = tmp & 0xFF;
@@ -2536,11 +2536,11 @@ index 0000000..e591381
 +	rstinfo.cached_tsr = mfspr(SPRN_TSR);
 +	rstinfo.cached_bwtc = mfcmu(CMUN_BWTC);
 +
-+	//pra_read(PRA_SFT_RST_FLAVOR, &rstinfo.cached_flavor);
-+	//pra_read(PRA_PABEND, &rstinfo.cached_pabend);
-+	//pra_read(PRA_PABEND_A, &rstinfo.cached_pabend_a);
-+	//pra_read(PRA_PABEND_B, &rstinfo.cached_pabend_b);
-+	//pra_read(PRA_PABEND_C, &rstinfo.cached_pabend_c);
++	pra_read(PRA_SFT_RST_FLAVOR, &rstinfo.cached_flavor);
++	pra_read(PRA_PABEND, &rstinfo.cached_pabend);
++	pra_read(PRA_PABEND_A, &rstinfo.cached_pabend_a);
++	pra_read(PRA_PABEND_B, &rstinfo.cached_pabend_b);
++	pra_read(PRA_PABEND_C, &rstinfo.cached_pabend_c);
 +
 +	rstinfo.type = RST_TYPE_UNKNOWN;
 +	rstinfo.origin = RST_ORIG_UNKNOWN;
