@@ -518,8 +518,8 @@ cp -r openbmcFSP2/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-fsp2-ada
 cp -r openbmcFSP2/build/tmp/deploy/images/fsp2/rootfs/*  openbmc_output/fsp2-ppc
 cp -r openbmcFSP2/build/tmp/deploy/images/fsp2-x86/rootfs/*  openbmc_output/fsp2-x86
 
-#cp openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/*.mif openbmc_output/fsp2-ppc/images/
-#cp openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr4-x86/1.0-r0/mif-fsp2-ddr4-x86-code/*.mif openbmc_output/fsp2-ppc/images/
+cp openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/*.mif openbmc_output/fsp2-ppc/images/
+cp openbmcFSP2/build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr4-x86/1.0-r0/mif-fsp2-ddr4-x86-code/*.mif openbmc_output/fsp2-ppc/images/
 
 rm openbmc_output/fsp2-ppc/core-image-minimal-*.gz
 rm openbmc_output/fsp2-x86/core-image-minimal-*.gz
