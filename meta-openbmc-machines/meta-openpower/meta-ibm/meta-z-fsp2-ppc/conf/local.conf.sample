@@ -31,7 +31,8 @@ IMAGE_INSTALL_append = "kernel-image-zimage kernel-dev kernel-vmlinux kernel-dev
 
 ################ Boot packages ############################################
 
-IMAGE_INSTALL_append = "ipl-fsp2-ddr3 ipl-fsp2-ddr4 "
+### ipl taken from 	fld directly
+#IMAGE_INSTALL_append = "ipl-fsp2-ddr3 ipl-fsp2-ddr4 "
 
 IMAGE_INSTALL_append = "uboot-fsp2 "
 
