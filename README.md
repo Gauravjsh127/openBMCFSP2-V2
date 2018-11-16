@@ -48,6 +48,7 @@ Machine | TEMPLATECONF
 fsp2-ppc | ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/```
 fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/```
 system-q-fsp2| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2/conf/```
+qemu-ppc| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-qemu-ppc/conf/```
 
 As an example target fsp2-ppc
 ```
@@ -76,4 +77,9 @@ Note
  - To install SDK in host system run the script tmp/deploy/sdk/openbmc-phosphor-glibc-x86_64-core-image-minimal-powerpc-toolchain-2.5.sh -y
  - SDK is installed in the path /opt/openbmc-phosphor/2.4.2 by default.
  - Always set the build environment variables defined in the file /opt/openbmc-phosphor/2.4.2/environment-setup-powerpc-openbmc-linux before using the c++/c openbmc compilers.
+```
+
+### 5) Run  Qemu Target
+```
+runqemu qemuppc
 ```
