@@ -21,6 +21,12 @@ PARALLEL_MAKE = '-j 32'
 
 ################ kernel ############################################
 IMAGE_INSTALL_append = "kernel-image-zimage kernel-dev kernel-vmlinux kernel-devicetree  fsp-headerfiles fsp-headerfiles-dev images "
+################ Boot packages ############################################
+
+### ipl taken from 	fld directly
+#IMAGE_INSTALL_append = "ipl-fsp2-ddr3 ipl-fsp2-ddr4 "
+
+IMAGE_INSTALL_append = "uboot-fsp2 "
 
 ################ Drivers ############################################
 ##1 fsptrace ######
