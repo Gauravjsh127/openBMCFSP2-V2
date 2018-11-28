@@ -1,0 +1,115 @@
+Subject: [uboot] Support for DHCP supplied TFTP server and file
+
+The patch is necessary because u-boot by default assumes the DHCP server and 
+TFTP server are on the same machine. Thus, u-boot doesn't recognize DHCP 
+option 150 which supplies a TFTP server IP address to use for a boot image. 
+The existing u-boot doesn't recognize option 150 and gives an error instead
+of using the IP address in option 150 as its TFP server.
+
+Signed-off-by: William Chung <whchung@us.ibm.com>
+Signed-off-by: Jonathan Wildstrom <jwildstr@us.ibm.com>
+---
+ include/net.h |    3 +++
+ net/bootp.c   |   42 ++++++++++++++++++++++++++++++++++++++++--
+ net/net.c     |    3 +++
+ 3 files changed, 46 insertions(+), 2 deletions(-)
+
+Index: b/include/net.h
+===================================================================
+--- a/include/net.h
++++ b/include/net.h
+@@ -422,6 +422,9 @@ enum proto_t {
+ /* from net/net.c */
+ extern char	BootFile[128];			/* Boot File name */
+ 
++extern u8 net_boot_server_ip[4];	/* TFTP server IP */
++extern int net_boot_server_ip_set;	/* TFTP server IP valid bit */
++
+ #if defined(CONFIG_CMD_DNS)
+ extern char *NetDNSResolve;		/* The host to resolve  */
+ extern char *NetDNSenvvar;		/* the env var to put the ip into */
+Index: b/net/bootp.c
+===================================================================
+--- a/net/bootp.c
++++ b/net/bootp.c
+@@ -133,12 +133,38 @@ static void BootpCopyNetParams(struct Bo
+ 
+ 	debug("Bootfile: %s\n", BootFile);
+ 
+-	/* Propagate to environment:
++	/*
++	 * Propagate to environment:
+ 	 * don't delete exising entry when BOOTP / DHCP reply does
+ 	 * not contain a new value
+ 	 */
+-	if (*BootFile)
++	if (*BootFile) {
+ 		setenv("bootfile", BootFile);
++		/* Look for the last "/". If one is found, temporarily
++		 * override it and set the "img_dir" value. */
++		int idx;
++		for (idx = strlen(BootFile) - 1; idx >= 0; idx--) {
++			if (BootFile[idx] == '/') {
++				/* Found the end. Override "kernel_img"
++				 * and "img_dir" */
++				setenv("kernel_img", &BootFile[idx+1]);
++				BootFile[idx] = '\0';
++				setenv("img_dir", BootFile);
++				BootFile[idx] = '/';
++				break;
++			}
++		}
++	}
++
++	if (net_boot_server_ip_set) {
++		char serv_ip_string[16];
++		snprintf(serv_ip_string, 15, "%d.%d.%d.%d",
++			 net_boot_server_ip[0],
++			 net_boot_server_ip[1],
++			 net_boot_server_ip[2],
++			 net_boot_server_ip[3]);
++		setenv("serverip", serv_ip_string);
++	}
+ }
+ 
+ static int truncate_sz(const char *name, int maxlen, int curlen)
+@@ -919,6 +945,11 @@ static int DhcpExtended(u8 *e, int messa
+ 	*e++ = 55;		/* Parameter Request List */
+ 	 cnt = e++;		/* Pointer to count of requested items */
+ 	*cnt = 0;
++
++	*e++  = 150;		/* Server IP */
++	*cnt += 1;
++	*e++  = 67;		/* Filename */
++	*cnt += 1;
+ #if defined(CONFIG_BOOTP_SUBNETMASK)
+ 	*e++  = 1;		/* Subnet Mask */
+ 	*cnt += 1;
+@@ -1249,6 +1280,13 @@ static void DhcpOptionsProcess(uchar *po
+ 		case 59:	/* Ignore Rebinding Time Option */
+ 			break;
+ 		case 66:	/* Ignore TFTP server name */
++		case 150:       /* Server IP name */
++			if (oplen != 4) {
++				printf("Server ip DHCP option wrong length\n");
++			} else {
++				memcpy(&net_boot_server_ip, popt + 2, 4);
++				net_boot_server_ip_set = 1;
++			}
+ 			break;
+ 		case 67:	/* vendor opt bootfile */
+ 			/*
+Index: b/net/net.c
+===================================================================
+--- a/net/net.c
++++ b/net/net.c
+@@ -173,6 +173,9 @@ ushort		NetOurNativeVLAN = 0xFFFF;
+ /* Boot File name */
+ char		BootFile[128];
+ 
++u8 net_boot_server_ip[4];
++int net_boot_server_ip_set = 0;
++
+ #if defined(CONFIG_CMD_SNTP)
+ /* NTP server IP address */
+ IPaddr_t	NetNtpServerIP;
