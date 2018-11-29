@@ -83,3 +83,48 @@ Note
 ```
 runqemu qemuppc
 ```
+
+
+### 5) Steps to generate UBOOT for z
+```
+- git clone  git@github.com:Gauravjsh127/openBMCFSP2-V2.git
+- ./openBMC_PSCN/clone-meta-fsp2-ibm-internal.sh
+- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-fsp2/conf/
+- . openbmc-env
+- bitbake core-image-minimal
+ 
+Now build the x-86-q target which will use the new uboot build and generate the mif files
+- rm-rf conf
+- cd ..
+- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-fsp2-x86/conf/
+- . openbmc-env
+- bitbake core-image-minimal-x86
+- bitbake mif-fsp2-ddr4-x86
+- bitbake mif-fsp2-ddr4-x86
+
+The new mif files for ddr3 and ddr4 will be generated inside the build directory
+ddr3 : /build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/*.mif
+ddr4 : /build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr4-x86-code/*.mif
+```
+
+
+
+### 6) Steps to generate UBOOT for q
+```
+- git clone  git@github.com:Gauravjsh127/openBMCFSP2-V2.git
+- ./openBMC_PSCN/clone-meta-fsp2-ibm-internal.sh
+- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2/conf/
+- . openbmc-env
+- bitbake core-image-minimal
+ 
+Now build the x-86-q target which will use the new uboot build and generate the mif files
+- rm-rf conf
+- cd ..
+- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2-x86/conf/
+- . openbmc-env
+- bitbake core-image-minimal-x86
+- bitbake mif-fsp2-ddr4-x86-q
+
+The new mif files for ddr3 and ddr4 will be generated inside the build directory
+ddr3 : /build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/hubble*.mif
+```
