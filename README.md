@@ -126,5 +126,5 @@ Now build the x-86-q target which will use the new uboot build and generate the 
 - bitbake mif-fsp2-ddr4-x86-q
 
 The new mif files for ddr3 and ddr4 will be generated inside the build directory
-ddr3 : /build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/hubble*.mif
+ddr3 : /build/tmp/work/x86_64-poky-linux/mif-fsp2-ddr3-x86/1.0-r0/mif-fsp2-ddr3-x86-code/hubble*.mif
 ```
