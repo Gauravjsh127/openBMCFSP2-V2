@@ -1,0 +1,41 @@
+Subject: [uboot] SFC: Avoid some warnings
+
+Signed-off-by: Frank Haverkamp <haver@linux.ibm.com>
+---
+ common/cmd_bootm.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+Index: b/common/cmd_bootm.c
+===================================================================
+--- a/common/cmd_bootm.c
++++ b/common/cmd_bootm.c
+@@ -62,6 +62,10 @@
+ #include <linux/lzo.h>
+ #endif /* CONFIG_LZO */
+ 
++#ifdef CONFIG_FSP2
++#include <sfc.h>
++#endif
++
+ DECLARE_GLOBAL_DATA_PTR;
+ 
+ #ifndef CONFIG_SYS_BOOTM_LEN
+@@ -292,14 +296,14 @@ static int bootm_start(cmd_tbl_t *cmdtp,
+ 	    (images.os.os == IH_OS_LINUX)) {
+ 		/* find ramdisk */
+ #ifdef CONFIG_FSP2
+-                sfc_disable_ecc_range(0xFC000000, 0xF, &prvEccAdr, &prvEccRng);
+-                sfc_set_mmio_window(0xFC000000, 0xF, &prvMmioAdr, &prvMmioRng);
++		sfc_disable_ecc_range(0xFC000000, 0xF, &prvEccAdr, &prvEccRng);
++		sfc_set_mmio_window(0xFC000000, 0xF, &prvMmioAdr, &prvMmioRng);
+ #endif
+ 		ret = boot_get_ramdisk(argc, argv, &images, IH_INITRD_ARCH,
+ 				&images.rd_start, &images.rd_end);
+ #ifdef CONFIG_FSP2
+-                sfc_disable_ecc_range(prvEccAdr, prvEccRng, &prvEccAdr, &prvEccRng);
+-                sfc_set_mmio_window(prvMmioAdr, prvMmioRng, &prvMmioAdr, &prvMmioRng);
++		sfc_disable_ecc_range(prvEccAdr, prvEccRng, &prvEccAdr, &prvEccRng);
++		sfc_set_mmio_window(prvMmioAdr, prvMmioRng, &prvMmioAdr, &prvMmioRng);
+ #endif
+ 
+ 		if (ret) {

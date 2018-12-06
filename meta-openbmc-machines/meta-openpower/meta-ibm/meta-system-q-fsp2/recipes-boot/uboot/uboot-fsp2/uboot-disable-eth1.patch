@@ -1,0 +1,43 @@
+Subject: [uboot] Disable ETH1 since the hardware is not popolated on QHub
+
+Signed-off-by: Frank Haverkamp <haver@linux.ibm.com>
+---
+ drivers/net/fsp_enet.c |    3 +++
+ include/configs/fsp2.h |    2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+Index: b/include/configs/fsp2.h
+===================================================================
+--- a/include/configs/fsp2.h
++++ b/include/configs/fsp2.h
+@@ -78,7 +78,7 @@
+ #define CONFIG_PHY_GIGE			/* Include GbE speed/duplex detection */
+ #define CONFIG_SYS_RX_ETH_BUFFER	32 /* number of eth rx buffers	*/
+ 
+-#define CONFIG_HAS_ETH1
++#undef CONFIG_HAS_ETH1
+ #define CONFIG_ETHADDR		00:01:73:01:c9:33
+ #define CONFIG_ETH1ADDR		00:01:73:01:c9:24
+ #define CONFIG_PHY_ADDR		1	/* PHY address			*/
+Index: b/drivers/net/fsp_enet.c
+===================================================================
+--- a/drivers/net/fsp_enet.c
++++ b/drivers/net/fsp_enet.c
+@@ -1176,6 +1176,7 @@ int fsp_eth_initialize(bd_t *bis)
+ 		hw->emac_offsets[0] = EMAC0_OFFSET;
+ 		hw->emac_offsets[1] = EMAC1_OFFSET;
+ 		hw->hw_addr = hw->emac_offsets[eth_num];
++		memset(dev->enetaddr, 0, 6); /* default, overwritten later */
+ 
+ 		switch (eth_num) {
+ 		case 0:
+@@ -1193,7 +1194,9 @@ int fsp_eth_initialize(bd_t *bis)
+ 			break;
+ 		case 1:
+ 			hw->mal_offs = MAL1_OFFSET;
++#if defined(CONFIG_HAS_ETH1)
+ 			memcpy(dev->enetaddr, bis->bi_enet1addr, 6);
++#endif
+ 
+ #if defined(CONFIG_476FSP2)
+ 			hw->mal_irq_rxeob = VECNUM_MAL1_RXEOB;
