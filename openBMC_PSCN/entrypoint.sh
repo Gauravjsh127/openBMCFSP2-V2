@@ -40,7 +40,7 @@ if [ -z "${RUN_AS_UID##*[!0-9]*}" -o -z "${RUN_AS_GID##*[!0-9]*}" ]; then
     exit 1
 fi
 
-id -gn "$RUN_AS_GID" >/dev/null 2>&1 || groupadd -f -g "$RUN_AS_GID" -o user
+grep -q ":$RUN_AS_GID:" /etc/group  >/dev/null 2>&1 || groupadd -f -g "$RUN_AS_GID" -o user
 id -un "$RUN_AS_UID" >/dev/null 2>&1 || useradd --shell /bin/bash -u "$RUN_AS_UID" -g "$RUN_AS_GID" -o -c "" -m user
 export HOME=/home/user
 asuser="/usr/sbin/exec-as $RUN_AS_UID $RUN_AS_GID"
