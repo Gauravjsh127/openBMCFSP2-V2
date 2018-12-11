@@ -257,11 +257,11 @@ elif [[ "${distro}" == boesemcp ]]; then
   if [[ -n "${http_proxy}" ]]; then
     PROXY="RUN echo \"Acquire::http::Proxy \\"\"${http_proxy}/\\"\";\" > /etc/apt/apt.conf.d/000apt-cacher-ng-proxy"
   fi
-  DOCKER_BASE_BOE="fwdocker.boeblingen.de.ibm.com:5000"
+  DOCKER_BASE_BOE="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   if [[ "${JENKINS}" == yes ]];then
-      DOCKER_BASE_BOE="fwdocker.boeblingen.de.ibm.com:5004"
+      DOCKER_BASE_BOE="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   fi
-  DOCKER_BASE_PSCN="fwdocker.boeblingen.de.ibm.com:5004"
+  DOCKER_BASE_PSCN="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   Dockerfile=$(cat << EOF
   FROM ${DOCKER_BASE_BOE}/${distro}:${imgtag}
   ${PROXY}
@@ -287,11 +287,11 @@ elif [[ "${distro}" == boesedev ]]; then
   if [[ -n "${http_proxy}" ]]; then
     PROXY="RUN echo \"Acquire::http::Proxy \\"\"${http_proxy}/\\"\";\" > /etc/apt/apt.conf.d/000apt-cacher-ng-proxy"
   fi
-  DOCKER_BASE_BOE="fwdocker.boeblingen.de.ibm.com:5000"
+  DOCKER_BASE_BOE="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   if [[ "${JENKINS}" == yes ]];then
-      DOCKER_BASE_BOE="fwdocker.boeblingen.de.ibm.com:5004"
+      DOCKER_BASE_BOE="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   fi
-  DOCKER_BASE_PSCN="fwdocker.boeblingen.de.ibm.com:5004"
+  DOCKER_BASE_PSCN="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   Dockerfile=$(cat << EOF
   FROM ${DOCKER_BASE_BOE}/${distro}:${imgtag}
   ${PROXY}
@@ -312,11 +312,11 @@ elif [[ "${distro}" == boesebase ]]; then
   if [[ -n "${http_proxy}" ]]; then
     PROXY="RUN echo \"Acquire::http::Proxy \\"\"${http_proxy}/\\"\";\" > /etc/apt/apt.conf.d/000apt-cacher-ng-proxy"
   fi
-  DOCKER_BASE_BOE="fwdocker.boeblingen.de.ibm.com:5000"
+  DOCKER_BASE_BOE="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   if [[ "${JENKINS}" == yes ]];then
-      DOCKER_BASE_BOE="fwdocker.boeblingen.de.ibm.com:5004"
+      DOCKER_BASE_BOE="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   fi
-  DOCKER_BASE_PSCN="fwdocker.boeblingen.de.ibm.com:5004"
+  DOCKER_BASE_PSCN="sys-zfw-zfsp-docker-local.artifactory.swg-devops.com"
   Dockerfile=$(cat << EOF
   FROM ${DOCKER_BASE_BOE}/${distro}:${imgtag}
   ${PROXY}
