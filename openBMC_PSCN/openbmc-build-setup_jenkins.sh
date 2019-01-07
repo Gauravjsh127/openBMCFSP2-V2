@@ -274,6 +274,7 @@ elif [[ "${distro}" == boesemcp ]]; then
   RUN git --version
   RUN yum remove -y --nogpgcheck  git
   RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.16.2.tar.gz; tar xzf git-2.16.2.tar.gz; cd git-2.16.2/; ls; make prefix=/usr all; make prefix=/usr install
+  RUN wget https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git/snapshot/trace-cmd-v2.7.tar.gz ; tar xzf trace-cmd-v2.7.tar.gz; cd trace-cmd-v2.7/; make ; make install
   RUN git --version
   RUN yum install -y --nogpgcheck texinfo chrpath texi2html
   RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/ccache-3.3.4-1.el7.x86_64.rpm  ; rpm -Uvh ccache-3.3.4-1.el7.x86_64.rpm
@@ -302,6 +303,7 @@ elif [[ "${distro}" == boesedev ]]; then
   RUN yum install -y --nogpgcheck yum-plugin-ovl
   RUN yum install -y --nogpgcheck texinfo chrpath texi2html
   RUN rm /usr/local/bin/gcc /usr/local/bin/g++
+  RUN wget https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git/snapshot/trace-cmd-v2.7.tar.gz ; tar xzf trace-cmd-v2.7.tar.gz; cd trace-cmd-v2.7/; make ; make install
   RUN grep -q ${GROUPS} /etc/group || groupadd -g ${GROUPS} ${USER}
   RUN grep -q ${UID} /etc/passwd || useradd -d ${HOME} -m -u ${UID} -g ${GROUPS} ${USER}
   ENV HOME ${HOME}
@@ -327,6 +329,7 @@ elif [[ "${distro}" == boesebase ]]; then
   RUN yum install -y --nogpgcheck yum-plugin-ovl
   RUN yum install -y --nogpgcheck texinfo chrpath texi2html
   RUN wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz; tar xf Python-3.*; cd Python-3.*; ./configure; make; make install
+  RUN wget https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git/snapshot/trace-cmd-v2.7.tar.gz ; tar xzf trace-cmd-v2.7.tar.gz; cd trace-cmd-v2.7/; make ; make install
   RUN rm /usr/local/bin/gcc /usr/local/bin/g++
   RUN grep -q ${GROUPS} /etc/group || groupadd -g ${GROUPS} ${USER}
   RUN grep -q ${UID} /etc/passwd || useradd -d ${HOME} -m -u ${UID} -g ${GROUPS} ${USER}

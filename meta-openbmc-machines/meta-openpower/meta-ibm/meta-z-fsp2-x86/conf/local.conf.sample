@@ -62,7 +62,7 @@ IMAGE_INSTALL_append += "ecc-x86 "
 
 ################ openBMC packages ############################################
 
-IMAGE_INSTALL_append += "trace-cmd busybox "
+IMAGE_INSTALL_append += " busybox "
 
 ## ADAL Header files ######
 
