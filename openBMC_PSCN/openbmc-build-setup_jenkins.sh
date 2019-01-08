@@ -533,6 +533,7 @@ rm -rf openbmcFSP2
 
 ./openbmc_output/openbmc-phosphor-*.sh -y
 
+cp /usr/local/bin/trace-cmd /tmp/openbmc_output/fsp2-x86/usr/bin/ 
 
 chown -R 1000 /opt/openbmc*
 chmod -R a+rx /opt/openbmc*
