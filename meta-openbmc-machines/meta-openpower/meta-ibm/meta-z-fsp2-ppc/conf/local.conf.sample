@@ -31,8 +31,8 @@ IMAGE_INSTALL_append = "kernel-image-zimage kernel-dev kernel-vmlinux kernel-dev
 
 ################ Boot packages ############################################
 
-### Mif files taken from fld directly
-IMAGE_INSTALL_append = "images-mif "
+### Mif files taken from fld build directly
+IMAGE_INSTALL_append = "mif-files "
 
 ################ Drivers ############################################
 ##1 fsptrace ######
