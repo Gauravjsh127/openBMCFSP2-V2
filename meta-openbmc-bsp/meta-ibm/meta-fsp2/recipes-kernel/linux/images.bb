@@ -1,4 +1,4 @@
-DESCRIPTION = " images folder that contains ipl binaries for ddr and ddr4 cards"
+DESCRIPTION = " Copy ipl binaries for ddr3 and ddr4 cards inside rootfs"
 LICENSE = "IBM-LICENSE"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/IBM-LICENSE;md5=f7b4ffd4b82a8971026b3fccf3d426bc"
 

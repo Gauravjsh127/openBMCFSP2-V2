@@ -27,14 +27,12 @@ DISTRO_FEATURES_LIBC = "ipv6 libc-backtrace libc-big-macros libc-bsd libc-cxx-te
                libc-posix-wchar-io"
 
 ################ kernel ############################################
-IMAGE_INSTALL_append = "kernel-image-zimage kernel-dev kernel-vmlinux kernel-devicetree  fsp-headerfiles fsp-headerfiles-dev images "
+IMAGE_INSTALL_append = "kernel-image-zimage kernel-dev kernel-vmlinux kernel-devicetree  fsp-headerfiles fsp-headerfiles-dev "
 
 ################ Boot packages ############################################
 
-### ipl taken from 	fld directly
-#IMAGE_INSTALL_append = "ipl-fsp2-ddr3 ipl-fsp2-ddr4 "
-
-IMAGE_INSTALL_append = "uboot-fsp2 "
+### Mif files taken from fld directly
+IMAGE_INSTALL_append = "images-mif "
 
 ################ Drivers ############################################
 ##1 fsptrace ######
