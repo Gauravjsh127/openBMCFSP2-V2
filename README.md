@@ -48,6 +48,7 @@ Machine | TEMPLATECONF
 fsp2-ppc | ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/```
 fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/```
 system-q-fsp2| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2/conf/```
+system-q-fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2-x86/conf/```
 qemu-ppc| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-qemu-ppc/conf/```
 
 As an example target fsp2-ppc
@@ -94,7 +95,7 @@ runqemu qemuppc
 - bitbake core-image-minimal
  
 Now build the x-86 target which will use the new uboot build and generate the mif files
-- rm-rf conf
+- rm -rf conf
 - cd ..
 - export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/
 - . openbmc-env
@@ -118,7 +119,7 @@ ddr4 : /build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr4-x86/1.0-r0/mif-fsp2-dd
 - bitbake core-image-minimal
  
 Now build the x-86-q target which will use the new uboot build and generate the mif files
-- rm-rf conf
+- rm -rf conf
 - cd ..
 - export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2-x86/conf/
 - . openbmc-env
