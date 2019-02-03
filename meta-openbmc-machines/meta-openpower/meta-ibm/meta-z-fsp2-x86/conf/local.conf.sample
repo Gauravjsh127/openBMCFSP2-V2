@@ -36,7 +36,7 @@ IMAGE_INSTALL_append += "fcp-x86 "
 
 IMAGE_INSTALL_append += "aeea aeea-dev "
 
-IMAGE_INSTALL_append += "fld-libs fld-libs-dev "
+IMAGE_INSTALL_append += "fld-libs-x86 fld-libs-x86-dev "
 
 IMAGE_INSTALL_append += "dbgx-x86 dbgx-x86-dev "
 
