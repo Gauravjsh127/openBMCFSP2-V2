@@ -210,3 +210,7 @@ IMAGE_INSTALL_append += "mosquitto"
 IMAGE_INSTALL_append += "mosquitto-clients"
 IMAGE_INSTALL_append += "xilinxvirtualcable"
 IMAGE_INSTALL_append += "hub-mqtt-cmdserver"
+
+################ Trace collect File recipie ############################################
+
+IMAGE_INSTALL_append += " trace-collect-q "
