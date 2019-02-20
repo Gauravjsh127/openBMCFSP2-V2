@@ -48,7 +48,7 @@ set -xeo pipefail
 # Default variables
 target=${target:-fsp2}
 distro=${distro:-boesemcp}
-imgtag=${imgtag:-8.5.4}
+imgtag=${imgtag:-8.5.2}
 obmcdir=${obmcdir:-/tmp/openbmcFSP2}
 sscdir=${sscdir:-${HOME}/workspace/}
 rnd="openBMC"-${RANDOM}
@@ -422,7 +422,7 @@ cd ..
 rm -rf build/conf
 
 #### Build the fsp2 PPC target  ####### 
-export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/
+export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-ppc/conf/
 ${BITBAKE_CMD}
 
 # Custom BitBake config settings
@@ -445,7 +445,7 @@ cd ../
 rm -rf build/conf
 
 #### Build the PSCN fsp2-x86 target  ####### 
-export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/
+export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-x86/conf/
 ${BITBAKE_CMD}
 
 # Custom BitBake config settings
@@ -529,6 +529,7 @@ rm -rf openbmcFSP2
 
 cp /usr/local/bin/trace-cmd /tmp/openbmc_output/fsp2-x86/usr/bin/ 
 
+### changeownership only needed for Jenkins job
 chown -R 1000 /opt/openbmc*
 chmod -R a+rx /opt/openbmc*
 

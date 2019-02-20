@@ -45,15 +45,15 @@ then move to the next step. Additional examples can be found in the
 
 Machine | TEMPLATECONF
 --------|---------
-fsp2-ppc | ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/```
-fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/```
-system-q-fsp2| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2/conf/```
-system-q-fsp2-x86| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2-x86/conf/```
-qemu-ppc| ```meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-qemu-ppc/conf/```
+fsp2-ppc | ```meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-ppc/conf/```
+fsp2-x86| ```meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-x86/conf/```
+system-q-fsp2| ```meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-system-q-fsp2/conf/```
+system-q-fsp2-x86| ```meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-system-q-fsp2-x86/conf/```
+qemu-ppc| ```meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-qemu-ppc/conf/```
 
 As an example target fsp2-ppc
 ```
-export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/
+export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-ppc/conf/
 ```
 
 ### 4) Build Images
@@ -90,14 +90,14 @@ runqemu qemuppc
 ```
 - git clone  git@github.com:Gauravjsh127/openBMCFSP2-V2.git
 - ./openBMC_PSCN/clone-meta-fsp2-ibm-internal.sh
-- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-ppc/conf/
+- export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-ppc/conf/
 - . openbmc-env
 - bitbake core-image-minimal
  
 Now build the x-86 target which will use the new uboot build and generate the mif files
 - rm -rf conf
 - cd ..
-- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-z-fsp2-x86/conf/
+- export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-z-fsp2-x86/conf/
 - . openbmc-env
 - bitbake core-image-minimal-x86
 - bitbake mif-fsp2-ddr3-x86
@@ -114,14 +114,14 @@ ddr4 : /build/tmp/work/x86_64-openbmc-linux/mif-fsp2-ddr4-x86/1.0-r0/mif-fsp2-dd
 ```
 - git clone  git@github.com:Gauravjsh127/openBMCFSP2-V2.git
 - ./openBMC_PSCN/clone-meta-fsp2-ibm-internal.sh
-- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2/conf/
+- export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-system-q-fsp2/conf/
 - . openbmc-env
 - bitbake core-image-minimal
  
 Now build the x-86-q target which will use the new uboot build and generate the mif files
 - rm -rf conf
 - cd ..
-- export TEMPLATECONF=meta-openbmc-machines/meta-openpower/meta-ibm/meta-system-q-fsp2-x86/conf/
+- export TEMPLATECONF=meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal/meta-ibm-machines/meta-system-q-fsp2-x86/conf/
 - . openbmc-env
 - bitbake core-image-minimal-x86
 - bitbake mif-fsp2-ddr4-x86-q
