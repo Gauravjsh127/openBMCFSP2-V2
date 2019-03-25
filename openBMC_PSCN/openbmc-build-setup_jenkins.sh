@@ -87,7 +87,7 @@ case ${ARCH} in
     exit 1
 esac
 
-openBMCVersion="V2"
+openBMCVersion="V2-REWORK"
     
 # Timestamp for job
 echo "Build started, $(date)"
@@ -98,25 +98,14 @@ CurrentDate=$(date +%F_%H.%M.%S)
 if [ ! -d ${obmcext} ]; then
       echo "Clone in openbmc master to ${obmcext}"
       git clone git@github.com:Gauravjsh127/openBMCFSP2-V2.git ${obmcext}
-    if [[ "${openbmcCommitID}" != HEAD ]];then
-          cd ${obmcext}   
-          git checkout ${openbmcCommitID}  
-          cd -  
-    fi
-      cd ${obmcext}
-      git tag releases/"openBMC"-${CurrentDate}
-      git push --tags 
-      cd - 
+	  cd ${obmcext}   
+	  git checkout rework-recipies  
+	  cd -  
+
       git clone git@github.ibm.com:XXPETRI/meta-fsp2-ibm-internal.git ${obmcext}/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal
-    if [[ "${ibminternalCommitID}" != HEAD ]];then
-          cd ${obmcext}/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal
-          git checkout ${ibminternalCommitID}
-          cd -    
-    fi
-      cd ${obmcext}/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal
-      git tag releases/"openBMC-IBM"-${CurrentDate}
-      git push --tags 
-      cd -   
+	  cd ${obmcext}/meta-openbmc-bsp/meta-ibm/meta-fsp2-ibm-internal
+	  git checkout rework_recipies
+	  cd -    
 fi
 
 # Work out what build target we should be running and set BitBake command
